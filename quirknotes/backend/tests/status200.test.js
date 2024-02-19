@@ -30,14 +30,16 @@ test("/getAllNotes - Return list of zero notes for getAllNotes", async () => {
   const res1 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
   
   expect(res1.status).toBe(200);
   const res2 = await fetch(`${SERVER_URL}/getAllNotes`, {
     method: "GET",
-    headers: "application/json"
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   expect(res2.status).toBe(200);
@@ -48,15 +50,15 @@ test("/getAllNotes - Return list of two notes for getAllNotes", async () => {
   const res1 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
 
   for (let i = 0; i < 2; i++) {
     post = await fetch(`${SERVER_URL}/postNote`, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         title: "lmao",
@@ -71,7 +73,9 @@ test("/getAllNotes - Return list of two notes for getAllNotes", async () => {
   expect(res1.status).toBe(200);
   const res2 = await fetch(`${SERVER_URL}/getAllNotes`, {
     method: "GET",
-    headers: "application/json"
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   expect(res2.status).toBe(200);
@@ -82,7 +86,7 @@ test("/deleteNote - Delete a note", async () => {
   const res1 = await fetch(`${SERVER_URL}/postNote`, {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       title: "NUH UH",
@@ -95,8 +99,8 @@ test("/deleteNote - Delete a note", async () => {
   const res2 = await fetch(`${SERVER_URL}/deleteNote/${body1.insertedId}`, {
     method: "DELETE",
     headers: {
-      "Content-Type": 'application/json'
-    }
+      "Content-Type": 'application/json',
+    },
   });
 
   const body2 = await res2.json();
@@ -108,7 +112,7 @@ test("/patchNote - Patch with content and title", async () => {
   const res1 = await fetch(`${SERVER_URL}/postNote`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       title: ":D",
@@ -120,7 +124,7 @@ test("/patchNote - Patch with content and title", async () => {
   const res2 = await fetch(`${SERVER_URL}/patchNote/${(await res1.json()).insertedId}`, {
     method: 'PATCH',
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     }, 
     body: JSON.stringify({
       title: "t",
@@ -137,7 +141,7 @@ test("/patchNote - Patch with just title", async () => {
   const res1 = await fetch(`${SERVER_URL}/postNote`, {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       title: "jeff",
@@ -151,7 +155,7 @@ test("/patchNote - Patch with just title", async () => {
   const res2 = await fetch(`${SERVER_URL}/patchNote/${body1.insertedId}`, {
     method: 'PATCH',
     headers: {
-      "Content-Type": 'application/json'
+      "Content-Type": 'application/json',
     },
     body: JSON.stringify({
       title: "lmao"
@@ -167,7 +171,7 @@ test("/patchNote - Patch with just content", async () => {
   const res1 = await fetch(`${SERVER_URL}/postNote`, {
     method: 'POST',
     headers: {
-      "Content-Type": 'application/json'
+      "Content-Type": 'application/json',
     },
     body: JSON.stringify({
       title: "YIPPEE",
@@ -181,7 +185,7 @@ test("/patchNote - Patch with just content", async () => {
   const res2 = await fetch(`${SERVER_URL}/patchNote/${body1.insertedId}`, {
     method: 'PATCH',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       content: "New Content"
@@ -197,7 +201,9 @@ test("/patchNote - Patch with just content", async () => {
 test("/deleteAllNotes - Delete one note", async () => {
   const res1 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: 'DELETE',
-    headers: "application/json"
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   expect(res1.status).toBe(200);
@@ -205,7 +211,7 @@ test("/deleteAllNotes - Delete one note", async () => {
   const res2 = await fetch(`${SERVER_URL}/postNote`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       title: "Huh?",
@@ -217,7 +223,9 @@ test("/deleteAllNotes - Delete one note", async () => {
 
   const res5 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: 'DELETE',
-    headers: "application/json"
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   expect(res5.status).toBe(200);
@@ -228,7 +236,7 @@ test("/deleteAllNotes - Delete three notes", async () => {
   const res1 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: 'DELETE',
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     }
   });
   expect(res1.status).toBe(200);
@@ -238,7 +246,7 @@ test("/deleteAllNotes - Delete three notes", async () => {
     post = await fetch(`${SERVER_URL}/postNote`, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         title: "lmao",
@@ -253,7 +261,7 @@ test("/deleteAllNotes - Delete three notes", async () => {
   const res2 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: 'DELETE',
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     }
   });
 
@@ -265,7 +273,7 @@ test("/updateNoteColor - Update color of a note to red (#FF0000)", async () => {
   const res = await fetch(`${SERVER_URL}/postNote`, {
     method: 'POST',
     headers: {
-      'Content-Type': "application/json"
+      'Content-Type': "application/json",
     },
     body: JSON.stringify({
       title: "rahhhhhhhh",
@@ -280,7 +288,7 @@ test("/updateNoteColor - Update color of a note to red (#FF0000)", async () => {
   const res2 = await fetch(`${SERVER_URL}/updateNoteColor/${resBody.insertedId}`, {
     method: 'PATCH',
     headers: {
-      "Content-Type": 'application/json'
+      "Content-Type": 'application/json',
     },
     body: JSON.stringify({
       color: '#FF0000'
