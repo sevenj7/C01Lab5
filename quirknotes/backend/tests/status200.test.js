@@ -27,7 +27,7 @@ test("/postNote - Post a note", async () => {
 });
 
 test("/getAllNotes - Return list of zero notes for getAllNotes", async () => {
-  const res1 = await fetch(SERVER_URL + "/deleteAllNotes", {
+  const res1 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json"
@@ -35,7 +35,7 @@ test("/getAllNotes - Return list of zero notes for getAllNotes", async () => {
   });
   
   expect(res1.status).toBe(200);
-  const res2 = await fetch(SERVER_URL + "/getAllNotes", {
+  const res2 = await fetch(`${SERVER_URL}/getAllNotes`, {
     method: "GET",
     headers: "application/json"
   });
@@ -45,7 +45,7 @@ test("/getAllNotes - Return list of zero notes for getAllNotes", async () => {
 });
 
 test("/getAllNotes - Return list of two notes for getAllNotes", async () => {
-  const res1 = await fetch(SERVER_URL + "/deleteAllNotes", {
+  const res1 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json"
@@ -53,7 +53,7 @@ test("/getAllNotes - Return list of two notes for getAllNotes", async () => {
   });
 
   for (let i = 0; i < 2; i++) {
-    post = await fetch(SERVER_URL + "/postNote", {
+    post = await fetch(`${SERVER_URL}/postNote`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -69,7 +69,7 @@ test("/getAllNotes - Return list of two notes for getAllNotes", async () => {
   }
   
   expect(res1.status).toBe(200);
-  const res2 = await fetch(SERVER_URL + "/getAllNotes", {
+  const res2 = await fetch(`${SERVER_URL}/getAllNotes`, {
     method: "GET",
     headers: "application/json"
   });
@@ -79,7 +79,7 @@ test("/getAllNotes - Return list of two notes for getAllNotes", async () => {
 });
 
 test("/deleteNote - Delete a note", async () => {
-  const res1 = await fetch(SERVER_URL + "/postNote", {
+  const res1 = await fetch(`${SERVER_URL}/postNote`, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json"
@@ -92,7 +92,7 @@ test("/deleteNote - Delete a note", async () => {
 
   expect(res1.status).toBe(200);
   const body1 = await res1.json();
-  const res2 = await fetch(SERVER_URL + "/deleteNote/" + body1.insertedId, {
+  const res2 = await fetch(`${SERVER_URL}/deleteNote/${body1.insertedId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": 'application/json'
@@ -101,11 +101,11 @@ test("/deleteNote - Delete a note", async () => {
 
   const body2 = await res2.json();
   expect(res2.status).toBe(200);
-  expect(body2.response).toBe("Document with ID " + body2.insertedId + " deleted.");
+  expect(body2.response).toBe(`Document with ID ${body2.insertedId} deleted.`);
 });
 
 test("/patchNote - Patch with content and title", async () => {
-  const res1 = await fetch(SERVER_URL + "/postNote", {
+  const res1 = await fetch(`${SERVER_URL}/postNote`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -117,7 +117,7 @@ test("/patchNote - Patch with content and title", async () => {
   });
 
   expect(res1.status).toBe(200);
-  const res2 = await fetch(SERVER_URL + "/patchNote/" + (await res1.json()).insertedId, {
+  const res2 = await fetch(`${SERVER_URL}/patchNote/${(await res1.json()).insertedId}`, {
     method: 'PATCH',
     headers: {
       "Content-Type": "application/json"
@@ -130,11 +130,11 @@ test("/patchNote - Patch with content and title", async () => {
 
   const body5 = await res2.json();
   expect(res2.status).toBe(200);
-  expect(body5.response).toBe('Document with ID ' + body5.insertedId + ' patched.');  
+  expect(body5.response).toBe(`Document with ID ${body5.insertedId} patched.`);  
 });
 
 test("/patchNote - Patch with just title", async () => {
-  const res1 = await fetch(SERVER_URL + "/postNote", {
+  const res1 = await fetch(`${SERVER_URL}/postNote`, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json"
@@ -148,7 +148,7 @@ test("/patchNote - Patch with just title", async () => {
   expect(res1.status).toBe(200);
   const body1 = await res1.json();
 
-  const res2 = await fetch(SERVER_URL + "/patchNote/" + body1.insertedId, {
+  const res2 = await fetch(`${SERVER_URL}/patchNote/${body1.insertedId}`, {
     method: 'PATCH',
     headers: {
       "Content-Type": 'application/json'
@@ -160,11 +160,11 @@ test("/patchNote - Patch with just title", async () => {
 
   const body2 = await res2.json();
   expect(res2.status).toBe(200);
-  expect(body2.response).toBe('Document with ID ' + body2.insertedId + ' patched.');
+  expect(body2.response).toBe(`Document with ID ${body2.insertedId} patched.`);
 });
 
 test("/patchNote - Patch with just content", async () => {
-  const res1 = await fetch(SERVER_URL + "/postNote", {
+  const res1 = await fetch(`${SERVER_URL}/postNote`, {
     method: 'POST',
     headers: {
       "Content-Type": 'application/json'
@@ -178,7 +178,7 @@ test("/patchNote - Patch with just content", async () => {
   expect(res1.status).toBe(200);
   const body1 = await res1.json();
 
-  const res2 = await fetch(SERVER_URL + "/patchNote/" + body1.insertedId, {
+  const res2 = await fetch(`${SERVER_URL}/patchNote/${body1.insertedId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
@@ -191,18 +191,18 @@ test("/patchNote - Patch with just content", async () => {
   const body2 = await res2.json();
 
   expect(res2.status).toBe(200);
-  expect(body2.response).toBe("Document with ID " + body2.insertedId + " patched.");
+  expect(body2.response).toBe(`Document with ID ${body2.insertedId} patched.`);
 });
 
 test("/deleteAllNotes - Delete one note", async () => {
-  const res1 = await fetch(SERVER_URL + "/deleteAllNotes", {
+  const res1 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: 'DELETE',
     headers: "application/json"
   });
 
   expect(res1.status).toBe(200);
 
-  const res2 = await fetch(SERVER_URL + "/postNote", {
+  const res2 = await fetch(`${SERVER_URL}/postNote`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -215,7 +215,7 @@ test("/deleteAllNotes - Delete one note", async () => {
 
   expect(res2.status).toBe(200);
 
-  const res5 = await fetch(SERVER_URL + "/deleteAllNotes", {
+  const res5 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: 'DELETE',
     headers: "application/json"
   });
@@ -225,7 +225,7 @@ test("/deleteAllNotes - Delete one note", async () => {
 });
 
 test("/deleteAllNotes - Delete three notes", async () => {
-  const res1 = await fetch(SERVER_URL + '/deleteAllNotes', {
+  const res1 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: 'DELETE',
     headers: {
       "Content-Type": "application/json"
@@ -235,7 +235,7 @@ test("/deleteAllNotes - Delete three notes", async () => {
 
   let post;
   for (let j = 0; j < 3; j++) {
-    post = await fetch(SERVER_URL + "/postNote", {
+    post = await fetch(`${SERVER_URL}/postNote`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -250,7 +250,7 @@ test("/deleteAllNotes - Delete three notes", async () => {
     expect((await post.json()).response).toBe("Note added succesfully.");
   }
   
-  const res2 = await fetch(SERVER_URL + '/deleteAllNotes', {
+  const res2 = await fetch(`${SERVER_URL}/deleteAllNotes`, {
     method: 'DELETE',
     headers: {
       "Content-Type": "application/json"
@@ -262,7 +262,7 @@ test("/deleteAllNotes - Delete three notes", async () => {
 });
 
 test("/updateNoteColor - Update color of a note to red (#FF0000)", async () => {
-  const res = await fetch(SERVER_URL + '/postNote', {
+  const res = await fetch(`${SERVER_URL}/postNote`, {
     method: 'POST',
     headers: {
       'Content-Type': "application/json"
@@ -277,7 +277,7 @@ test("/updateNoteColor - Update color of a note to red (#FF0000)", async () => {
   const resBody = await res.json();
   expect(resBody.response).toBe("Note added successfully.");
 
-  const res2 = await fetch(SERVER_URL + "/updateNoteColor/" + resBody.insertedId, {
+  const res2 = await fetch(`${SERVER_URL}/updateNoteColor/${resBody.insertedId}`, {
     method: 'PATCH',
     headers: {
       "Content-Type": 'application/json'
