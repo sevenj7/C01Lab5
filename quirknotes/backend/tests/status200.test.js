@@ -1,5 +1,3 @@
-const { json } = require("express");
-
 const SERVER_URL = "http://localhost:4000";
 
 test("1+2=3, empty array is empty", () => {
